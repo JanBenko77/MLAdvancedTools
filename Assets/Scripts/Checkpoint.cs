@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<CarController>(out CarController carController))
+        if (other.TryGetComponent<PrometeoCarController>(out PrometeoCarController carController))
         {
             checkpointTracker.CarThroughCheckpoint(this, other.transform);
         }
