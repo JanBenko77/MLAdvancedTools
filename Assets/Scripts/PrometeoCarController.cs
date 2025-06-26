@@ -450,6 +450,21 @@ public class PrometeoCarController : MonoBehaviour
         }
     }
 
+    public void StopCarCompletely()
+    {
+        carRigidbody.linearVelocity = Vector3.zero;
+        carRigidbody.angularVelocity = Vector3.zero;
+        carRigidbody.Sleep();
+        ThrottleOff();
+        ResetSteeringAngle();
+        isDrifting = false;
+        isTractionLocked = false;
+        driftingAxis = 0f;
+        steeringAxis = 0f;
+        throttleAxis = 0f;
+        CancelInvoke("DecelerateCar");
+    }
+
     //The following method turns the front car wheels to the left. The speed of this movement will depend on the steeringSpeed variable.
     public void TurnLeft(){
       steeringAxis = steeringAxis - (Time.deltaTime * 10f * steeringSpeed);

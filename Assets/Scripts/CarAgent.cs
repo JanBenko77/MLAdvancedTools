@@ -9,11 +9,11 @@ public class CarAgent : Agent
     [SerializeField] private PrometeoCarController carController;
     [SerializeField] private CheckpointTracker checkpointTracker;
 
-    private Transform startingPos;
+    private Vector3 startingPos;
 
     void Start()
     {
-        startingPos = transform;
+        startingPos = transform.position;
         carController = GetComponent<PrometeoCarController>();
         checkpointTracker = FindAnyObjectByType<CheckpointTracker>();
         checkpointTracker.OnPlayerCorrectCheckpoint += CheckpointTracker_OnPlayerCorrectCheckpoint;
@@ -22,7 +22,7 @@ public class CarAgent : Agent
 
     void Update()
     {
-        
+
     }
 
     private void CheckpointTracker_OnPlayerCorrectCheckpoint(object sender, CheckpointEventArgs e)
@@ -43,9 +43,9 @@ public class CarAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = startingPos.position;
-        transform.forward = startingPos.forward;
-        carController.ThrottleOff();
+        checkpointTracker.ResetCheckpoint(carController.transform);
+        carController.StopCarCompletely();
+        ResetPosition();
     }
 
 
@@ -72,7 +72,7 @@ public class CarAgent : Agent
 
         switch (actions.DiscreteActions[1])
         {
-            case 0: if (forward == false); break;
+            case 0: if (forward == false) ; break;
             case 1: if (forward == true) back = false; break;
             case 2: if (forward == true) back = true; break;
         }
@@ -85,7 +85,7 @@ public class CarAgent : Agent
 
         switch (actions.DiscreteActions[3])
         {
-            case 0: if (turning == false); break;
+            case 0: if (turning == false) ; break;
             case 1: if (turning == true) left = false; break;
             case 2: if (turning == true) left = true; break;
         }
@@ -122,5 +122,11 @@ public class CarAgent : Agent
         {
             AddReward(-0.1f);
         }
+    }
+
+    private void ResetPosition()
+    {
+        transform.position = startingPos;
+        transform.forward = -Vector3.forward;
     }
 }

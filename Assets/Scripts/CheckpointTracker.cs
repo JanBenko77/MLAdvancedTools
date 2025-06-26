@@ -57,6 +57,19 @@ public class CheckpointTracker : MonoBehaviour
     {
         return checkpointList[nextCheckpointIndexList[carTransformList.IndexOf(carTransform)]].transform;
     }
+
+    public void ResetCheckpoint(Transform carTransform)
+    {
+        int index = carTransformList.IndexOf(carTransform);
+        if (index >= 0 && index < nextCheckpointIndexList.Count)
+        {
+            nextCheckpointIndexList[index] = 0;
+        }
+        else
+        {
+            Debug.LogError("Car transform not found in the list.");
+        }
+    }
 }
 
 public class CheckpointEventArgs : EventArgs
