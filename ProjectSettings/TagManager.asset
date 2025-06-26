@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Walls
   - Checkpoints
+  - Reset
   layers:
   - Default
   - TransparentFX

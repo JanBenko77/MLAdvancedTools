@@ -259,8 +259,9 @@ public class PrometeoCarController : MonoBehaviour
             Debug.LogWarning(ex);
           }
         }
-
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -421,6 +422,33 @@ public class PrometeoCarController : MonoBehaviour
     //
     //STEERING METHODS
     //
+
+    public void SetInputs(bool forwardInput, bool turnInput, bool forInput, bool leftInput, bool handBrakeInput)
+    {
+        if(forwardInput){
+            GoForward();
+        }else if(forInput){
+            GoReverse();
+        }else{
+            ThrottleOff();
+        }
+    
+        if(turnInput){
+            if(leftInput){
+            TurnLeft();
+            }else{
+            TurnRight();
+            }
+        }else{
+            ResetSteeringAngle();
+        }
+    
+        if(handBrakeInput){
+            Handbrake();
+        }else{
+            RecoverTraction();
+        }
+    }
 
     //The following method turns the front car wheels to the left. The speed of this movement will depend on the steeringSpeed variable.
     public void TurnLeft(){

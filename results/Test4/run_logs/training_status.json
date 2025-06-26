@@ -1,0 +1,29 @@
+{
+    "CarDriver": {
+        "checkpoints": [
+            {
+                "steps": 902,
+                "file_path": "results\\Test4\\CarDriver\\CarDriver-902.onnx",
+                "reward": 3.0,
+                "creation_time": 1750831995.3700972,
+                "auxillary_file_paths": [
+                    "results\\Test4\\CarDriver\\CarDriver-902.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 902,
+            "file_path": "results\\Test4\\CarDriver.onnx",
+            "reward": 3.0,
+            "creation_time": 1750831995.3700972,
+            "auxillary_file_paths": [
+                "results\\Test4\\CarDriver\\CarDriver-902.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}
