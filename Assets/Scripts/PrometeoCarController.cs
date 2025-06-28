@@ -423,29 +423,57 @@ public class PrometeoCarController : MonoBehaviour
     //STEERING METHODS
     //
 
-    public void SetInputs(bool forwardInput, bool turnInput, bool forInput, bool leftInput, bool handBrakeInput)
+    public void SetInputs(bool movingInput, bool forwardInput, bool turningInput, bool leftInput, bool handBrakeInput)
     {
-        if(forwardInput){
-            GoForward();
-        }else if(forInput){
-            GoReverse();
-        }else{
+        if (movingInput)
+        {
+            if (forwardInput)
+            {
+                CancelInvoke("DecelerateCar");
+                deceleratingCar = false;
+                GoForward();
+            }
+            else
+            {
+                CancelInvoke("DecelerateCar");
+                deceleratingCar = false;
+                GoReverse();
+            }
+        }
+        else
+        {
+            if (!handBrakeInput && !deceleratingCar)
+            {
+                InvokeRepeating("DecelerateCar", 0f, 0.1f);
+                deceleratingCar = true;
+            }
             ThrottleOff();
         }
-    
-        if(turnInput){
-            if(leftInput){
-            TurnLeft();
-            }else{
-            TurnRight();
+
+        if (turningInput)
+        {
+            if(leftInput)
+            {
+                TurnLeft();
             }
-        }else{
+            else
+            {
+                TurnRight();
+            }
+        }
+        else
+        {
             ResetSteeringAngle();
         }
     
-        if(handBrakeInput){
+        if(handBrakeInput)
+        {
+            CancelInvoke("DecelerateCar");
+            deceleratingCar = false;
             Handbrake();
-        }else{
+        }
+        else
+        {
             RecoverTraction();
         }
     }
@@ -462,7 +490,6 @@ public class PrometeoCarController : MonoBehaviour
         driftingAxis = 0f;
         steeringAxis = 0f;
         throttleAxis = 0f;
-        CancelInvoke("DecelerateCar");
     }
 
     //The following method turns the front car wheels to the left. The speed of this movement will depend on the steeringSpeed variable.

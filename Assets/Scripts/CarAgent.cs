@@ -15,14 +15,8 @@ public class CarAgent : Agent
     {
         startingPos = transform.position;
         carController = GetComponent<PrometeoCarController>();
-        checkpointTracker = FindAnyObjectByType<CheckpointTracker>();
         checkpointTracker.OnPlayerCorrectCheckpoint += CheckpointTracker_OnPlayerCorrectCheckpoint;
         checkpointTracker.OnPlayerWrongCheckpoint += CheckpointTracker_OnPlayerWrongCheckpoint;
-    }
-
-    void Update()
-    {
-
     }
 
     private void CheckpointTracker_OnPlayerCorrectCheckpoint(object sender, CheckpointEventArgs e)
@@ -58,23 +52,23 @@ public class CarAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        bool moving = false;
         bool forward = false;
-        bool back = false;
         bool turning = false;
         bool left = false;
         bool handBreak = false;
 
         switch (actions.DiscreteActions[0])
         {
-            case 0: forward = false; break;
-            case 1: forward = true; break;
+            case 0: moving = false; break;
+            case 1: moving = true; break;
         }
 
         switch (actions.DiscreteActions[1])
         {
-            case 0: if (forward == false) ; break;
-            case 1: if (forward == true) back = false; break;
-            case 2: if (forward == true) back = true; break;
+            case 0: if (moving == false); break;
+            case 1: if (moving == true) forward = true; break;
+            case 2: if (moving == true) forward = false; break;
         }
 
         switch (actions.DiscreteActions[2])
@@ -85,7 +79,7 @@ public class CarAgent : Agent
 
         switch (actions.DiscreteActions[3])
         {
-            case 0: if (turning == false) ; break;
+            case 0: if (turning == false); break;
             case 1: if (turning == true) left = false; break;
             case 2: if (turning == true) left = true; break;
         }
@@ -96,7 +90,7 @@ public class CarAgent : Agent
             case 1: handBreak = true; break;
         }
 
-        carController.SetInputs(forward, back, turning, left, handBreak);
+        carController.SetInputs(moving, forward, turning, left, handBreak);
     }
 
     private void OnCollisionEnter(Collision collision)

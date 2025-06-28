@@ -48,7 +48,7 @@ public class CheckpointTracker : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Player passed through the wrong checkpoint!");
+            Debug.LogError("Player passed through the wrong checkpoint! Caught by: " + transform.name);
             OnPlayerWrongCheckpoint?.Invoke(this, new CheckpointEventArgs(carTransform));
         }
     }
