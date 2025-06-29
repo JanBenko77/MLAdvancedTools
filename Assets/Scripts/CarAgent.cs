@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CarAgent : Agent
 {
-    [SerializeField] private PrometeoCarController carController;
+    [SerializeField] private CarController carController;
     [SerializeField] private CheckpointTracker checkpointTracker;
 
     private Vector3 startingPos;
@@ -14,7 +14,7 @@ public class CarAgent : Agent
     void Start()
     {
         startingPos = transform.position;
-        carController = GetComponent<PrometeoCarController>();
+        carController = GetComponent<CarController>();
         checkpointTracker.OnPlayerCorrectCheckpoint += CheckpointTracker_OnPlayerCorrectCheckpoint;
         checkpointTracker.OnPlayerWrongCheckpoint += CheckpointTracker_OnPlayerWrongCheckpoint;
     }
@@ -38,10 +38,9 @@ public class CarAgent : Agent
     public override void OnEpisodeBegin()
     {
         checkpointTracker.ResetCheckpoint(carController.transform);
-        carController.StopCarCompletely();
+        carController.StopCompletely();
         ResetPosition();
     }
-
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -52,99 +51,56 @@ public class CarAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        bool moving = false;
-        bool forward = false;
-        bool turning = false;
-        bool left = false;
-        bool handBreak = false;
+        float forwardAmount = 0f;
+        float turnAmount = 0f;
 
         switch (actions.DiscreteActions[0])
         {
-            case 0: moving = false; break;
-            case 1: moving = true; break;
+            case 0: //not moving
+                forwardAmount = 0f;
+                break;
+            case 1: //moving forward
+                forwardAmount = +1f;
+                break;
+            case 2: //moving reverse
+                forwardAmount = -1f;
+                break;
         }
 
         switch (actions.DiscreteActions[1])
         {
-            case 0: if (moving == false); break;
-            case 1: if (moving == true) forward = true; break;
-            case 2: if (moving == true) forward = false; break;
+            case 0: //not turning
+                turnAmount = 0f;
+                break;
+            case 1: //turning right
+                turnAmount = +1f;
+                break;
+            case 2: //turning left
+                turnAmount = -1f;
+                break;
         }
 
-        switch (actions.DiscreteActions[2])
-        {
-            case 0: turning = false; break;
-            case 1: turning = true; break;
-        }
-
-        switch (actions.DiscreteActions[3])
-        {
-            case 0: if (turning == false); break;
-            case 1: if (turning == true) left = false; break;
-            case 2: if (turning == true) left = true; break;
-        }
-
-        switch (actions.DiscreteActions[4])
-        {
-            case 0: handBreak = false; break;
-            case 1: handBreak = true; break;
-        }
-
-        carController.SetInputs(moving, forward, turning, left, handBreak);
+        carController.SetInputs(forwardAmount, turnAmount);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActions = actionsOut.DiscreteActions;
 
-        // Action 0: Moving (0 = no, 1 = yes)
-        // Action 1: Forward/Reverse (0 = none, 1 = forward, 2 = reverse)
-        // Action 2: Turning (0 = no, 1 = yes)
-        // Action 3: Left/Right (0 = none, 1 = right, 2 = left)
-        // Action 4: Handbrake (0 = no, 1 = yes)
-
-        bool w = Input.GetKey(KeyCode.W);
-        bool s = Input.GetKey(KeyCode.S);
-        bool a = Input.GetKey(KeyCode.A);
-        bool d = Input.GetKey(KeyCode.D);
-        bool space = Input.GetKey(KeyCode.Space);
-
-        // Moving and Forward/Reverse
-        if (w)
-        {
-            discreteActions[0] = 1; // moving
-            discreteActions[1] = 1; // forward
-        }
-        else if (s)
-        {
-            discreteActions[0] = 1; // moving
-            discreteActions[1] = 2; // reverse
-        }
+        if (Input.GetKey(KeyCode.W))
+            discreteActions[0] = 1; //forward
+        else if (Input.GetKey(KeyCode.S))
+            discreteActions[0] = 2; //reverse
         else
-        {
-            discreteActions[0] = 0; // not moving
-            discreteActions[1] = 0; // none
-        }
+            discreteActions[0] = 0; //not moving
 
-        // Turning and Left/Right
-        if (a)
-        {
-            discreteActions[2] = 1; // turning
-            discreteActions[3] = 2; // left
-        }
-        else if (d)
-        {
-            discreteActions[2] = 1; // turning
-            discreteActions[3] = 1; // right
-        }
+
+        if (Input.GetKey(KeyCode.D))
+            discreteActions[1] = 1; //right
+        else if (Input.GetKey(KeyCode.A))
+            discreteActions[1] = 2; //left
         else
-        {
-            discreteActions[2] = 0; // not turning
-            discreteActions[3] = 0; // none
-        }
-
-        // Handbrake
-        discreteActions[4] = space ? 1 : 0;
+            discreteActions[1] = 0; //not turning
     }
 
     private void OnCollisionEnter(Collision collision)
