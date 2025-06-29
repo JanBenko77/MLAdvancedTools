@@ -1,0 +1,38 @@
+{
+    "CarDriver": {
+        "checkpoints": [
+            {
+                "steps": 499955,
+                "file_path": "results\\FullTrackImi8\\CarDriver\\CarDriver-499955.onnx",
+                "reward": -25.243296543757122,
+                "creation_time": 1751219062.1421614,
+                "auxillary_file_paths": [
+                    "results\\FullTrackImi8\\CarDriver\\CarDriver-499955.pt"
+                ]
+            },
+            {
+                "steps": 500019,
+                "file_path": "results\\FullTrackImi8\\CarDriver\\CarDriver-500019.onnx",
+                "reward": -25.243296543757122,
+                "creation_time": 1751219062.2093801,
+                "auxillary_file_paths": [
+                    "results\\FullTrackImi8\\CarDriver\\CarDriver-500019.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500019,
+            "file_path": "results\\FullTrackImi8\\CarDriver.onnx",
+            "reward": -25.243296543757122,
+            "creation_time": 1751219062.2093801,
+            "auxillary_file_paths": [
+                "results\\FullTrackImi8\\CarDriver\\CarDriver-500019.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}

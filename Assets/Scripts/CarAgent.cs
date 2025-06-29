@@ -19,11 +19,16 @@ public class CarAgent : Agent
         checkpointTracker.OnPlayerWrongCheckpoint += CheckpointTracker_OnPlayerWrongCheckpoint;
     }
 
+    private void Update()
+    {
+        GiveReward();
+    }
+
     private void CheckpointTracker_OnPlayerCorrectCheckpoint(object sender, CheckpointEventArgs e)
     {
         if (e.CarTransform != null)
         {
-            AddReward(1.0f);
+            AddReward(0.1f);
         }
     }
 
@@ -42,11 +47,26 @@ public class CarAgent : Agent
         ResetPosition();
     }
 
+    private void GiveReward()
+    {
+        Vector3 toCheckpoint = checkpointTracker.GetNextCheckpoint(transform).transform.position - transform.position;
+        float alignment = Vector3.Dot(transform.forward.normalized, toCheckpoint.normalized);
+        float forwardSpeed = Vector3.Dot(carController.GetVelocity(), transform.forward);
+        AddReward(0.001f * forwardSpeed * alignment);
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         Vector3 checkpointForward = checkpointTracker.GetNextCheckpoint(carController.transform).transform.forward;
         float directionDot = Vector3.Dot(carController.transform.forward, checkpointForward);
         sensor.AddObservation(directionDot);
+
+        Vector3 directionToCheckpoint = checkpointTracker.GetNextCheckpoint(carController.transform).transform.position - transform.position;
+        float angleToCheckpoint = Vector3.SignedAngle(transform.forward, directionToCheckpoint.normalized, Vector3.up);
+        sensor.AddObservation(angleToCheckpoint / 180f);
+
+        //float speed = carController.CurrentSpeed;
+        //sensor.AddObservation(speed / carController.MaxSpeed);
     }
 
     public override void OnActionReceived(ActionBuffers actions)

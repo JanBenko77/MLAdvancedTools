@@ -13,6 +13,8 @@ public class CarController : MonoBehaviour
     private float inputForward = 0f;
     private float inputTurn = 0f;
 
+    public Vector3 GetVelocity() => rb.linearVelocity;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
