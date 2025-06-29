@@ -115,7 +115,7 @@ public class CarAgent : Agent
     {
         if (other.gameObject.CompareTag("Reset"))
         {
-            AddReward(-1.0f);
+            AddReward(-2.0f);
             EndEpisode();
         }
     }
