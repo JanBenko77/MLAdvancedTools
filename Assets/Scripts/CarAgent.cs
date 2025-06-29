@@ -9,6 +9,11 @@ public class CarAgent : Agent
     [SerializeField] private CarController carController;
     [SerializeField] private CheckpointTracker checkpointTracker;
 
+    private int stuckSteps = 0;
+    private const int maxStuckSteps = 50;
+    private float prevDistanceToCheckpoint = -1f;
+    private int wallCollisionCount = 0;
+
     private Vector3 startingPos;
 
     void Start()
@@ -17,11 +22,6 @@ public class CarAgent : Agent
         carController = GetComponent<CarController>();
         checkpointTracker.OnPlayerCorrectCheckpoint += CheckpointTracker_OnPlayerCorrectCheckpoint;
         checkpointTracker.OnPlayerWrongCheckpoint += CheckpointTracker_OnPlayerWrongCheckpoint;
-    }
-
-    private void Update()
-    {
-        GiveReward();
     }
 
     private void CheckpointTracker_OnPlayerCorrectCheckpoint(object sender, CheckpointEventArgs e)
@@ -44,15 +44,9 @@ public class CarAgent : Agent
     {
         checkpointTracker.ResetCheckpoint(carController.transform);
         carController.StopCompletely();
+        stuckSteps = 0;
+        prevDistanceToCheckpoint = -1f;
         ResetPosition();
-    }
-
-    private void GiveReward()
-    {
-        Vector3 toCheckpoint = checkpointTracker.GetNextCheckpoint(transform).transform.position - transform.position;
-        float alignment = Vector3.Dot(transform.forward.normalized, toCheckpoint.normalized);
-        float forwardSpeed = Vector3.Dot(carController.GetVelocity(), transform.forward);
-        AddReward(0.001f * forwardSpeed * alignment);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -64,40 +58,48 @@ public class CarAgent : Agent
         Vector3 directionToCheckpoint = checkpointTracker.GetNextCheckpoint(carController.transform).transform.position - transform.position;
         float angleToCheckpoint = Vector3.SignedAngle(transform.forward, directionToCheckpoint.normalized, Vector3.up);
         sensor.AddObservation(angleToCheckpoint / 180f);
-
-        //float speed = carController.CurrentSpeed;
-        //sensor.AddObservation(speed / carController.MaxSpeed);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        AddReward(-0.001f);
+
         float forwardAmount = 0f;
         float turnAmount = 0f;
 
         switch (actions.DiscreteActions[0])
         {
-            case 0: //not moving
-                forwardAmount = 0f;
-                break;
-            case 1: //moving forward
-                forwardAmount = +1f;
-                break;
-            case 2: //moving reverse
-                forwardAmount = -1f;
-                break;
+            case 0: forwardAmount = 0f; break;
+            case 1: forwardAmount = +1f; break;
+            case 2: forwardAmount = -1f; break;
         }
 
         switch (actions.DiscreteActions[1])
         {
-            case 0: //not turning
-                turnAmount = 0f;
-                break;
-            case 1: //turning right
-                turnAmount = +1f;
-                break;
-            case 2: //turning left
-                turnAmount = -1f;
-                break;
+            case 0: turnAmount = 0f; break;
+            case 1: turnAmount = +1f; break;
+            case 2: turnAmount = -1f; break;
+        }
+
+        Vector3 checkpointPos = checkpointTracker.GetNextCheckpoint(transform).transform.position;
+        float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointPos);
+        if (prevDistanceToCheckpoint > 0f)
+        {
+            float progress = prevDistanceToCheckpoint - distanceToCheckpoint;
+            AddReward(progress * 0.01f);
+        }
+        prevDistanceToCheckpoint = distanceToCheckpoint;
+
+        // End episode if stuck
+        if (carController.CurrentSpeed < 0.1f)
+            stuckSteps++;
+        else
+            stuckSteps = 0;
+
+        if (stuckSteps > maxStuckSteps)
+        {
+            AddReward(-1.0f);
+            EndEpisode();
         }
 
         carController.SetInputs(forwardAmount, turnAmount);
@@ -114,7 +116,6 @@ public class CarAgent : Agent
         else
             discreteActions[0] = 0; //not moving
 
-
         if (Input.GetKey(KeyCode.D))
             discreteActions[1] = 1; //right
         else if (Input.GetKey(KeyCode.A))
@@ -123,28 +124,13 @@ public class CarAgent : Agent
             discreteActions[1] = 0; //not turning
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Walls"))
-        {
-            AddReward(-0.5f);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Reset"))
         {
-            AddReward(-2.0f);
+            AddReward(-0.5f * wallCollisionCount);
+            wallCollisionCount++;
             EndEpisode();
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Walls"))
-        {
-            AddReward(-0.1f);
         }
     }
 

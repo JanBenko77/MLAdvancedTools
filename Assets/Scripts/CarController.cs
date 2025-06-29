@@ -14,6 +14,8 @@ public class CarController : MonoBehaviour
     private float inputTurn = 0f;
 
     public Vector3 GetVelocity() => rb.linearVelocity;
+    public float MaxSpeed => maxSpeed;
+    public float CurrentSpeed => currentSpeed;
 
     private void Awake()
     {
