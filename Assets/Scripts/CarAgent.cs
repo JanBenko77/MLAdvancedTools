@@ -93,6 +93,60 @@ public class CarAgent : Agent
         carController.SetInputs(moving, forward, turning, left, handBreak);
     }
 
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var discreteActions = actionsOut.DiscreteActions;
+
+        // Action 0: Moving (0 = no, 1 = yes)
+        // Action 1: Forward/Reverse (0 = none, 1 = forward, 2 = reverse)
+        // Action 2: Turning (0 = no, 1 = yes)
+        // Action 3: Left/Right (0 = none, 1 = right, 2 = left)
+        // Action 4: Handbrake (0 = no, 1 = yes)
+
+        bool w = Input.GetKey(KeyCode.W);
+        bool s = Input.GetKey(KeyCode.S);
+        bool a = Input.GetKey(KeyCode.A);
+        bool d = Input.GetKey(KeyCode.D);
+        bool space = Input.GetKey(KeyCode.Space);
+
+        // Moving and Forward/Reverse
+        if (w)
+        {
+            discreteActions[0] = 1; // moving
+            discreteActions[1] = 1; // forward
+        }
+        else if (s)
+        {
+            discreteActions[0] = 1; // moving
+            discreteActions[1] = 2; // reverse
+        }
+        else
+        {
+            discreteActions[0] = 0; // not moving
+            discreteActions[1] = 0; // none
+        }
+
+        // Turning and Left/Right
+        if (a)
+        {
+            discreteActions[2] = 1; // turning
+            discreteActions[3] = 2; // left
+        }
+        else if (d)
+        {
+            discreteActions[2] = 1; // turning
+            discreteActions[3] = 1; // right
+        }
+        else
+        {
+            discreteActions[2] = 0; // not turning
+            discreteActions[3] = 0; // none
+        }
+
+        // Handbrake
+        discreteActions[4] = space ? 1 : 0;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Walls"))

@@ -1,0 +1,29 @@
+{
+    "CarDriver": {
+        "checkpoints": [
+            {
+                "steps": 164239,
+                "file_path": "results\\TestNoImitation\\CarDriver\\CarDriver-164239.onnx",
+                "reward": -7.0,
+                "creation_time": 1751170719.3056233,
+                "auxillary_file_paths": [
+                    "results\\TestNoImitation\\CarDriver\\CarDriver-164239.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 164239,
+            "file_path": "results\\TestNoImitation\\CarDriver.onnx",
+            "reward": -7.0,
+            "creation_time": 1751170719.3056233,
+            "auxillary_file_paths": [
+                "results\\TestNoImitation\\CarDriver\\CarDriver-164239.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}

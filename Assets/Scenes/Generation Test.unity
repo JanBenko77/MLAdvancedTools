@@ -13336,7 +13336,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -13360,7 +13360,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 1635292021}
 --- !u!1 &302395062
@@ -31815,7 +31815,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -31839,9 +31839,25 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 49293788}
+--- !u!114 &787645184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787645172}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 3500
+  DemonstrationName: CarDriverDemo
+  DemonstrationDirectory: Demos
 --- !u!1 &788056090
 GameObject:
   m_ObjectHideFlags: 0
@@ -50481,7 +50497,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -50505,7 +50521,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 66713968}
 --- !u!1 &1281479565
@@ -60416,7 +60432,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -60440,9 +60456,25 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 2145947169}
+--- !u!114 &1526250320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526250311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 1
+  NumStepsToRecord: 0
+  DemonstrationName: 
+  DemonstrationDirectory: 
 --- !u!1 &1529316590
 GameObject:
   m_ObjectHideFlags: 0
@@ -62536,7 +62568,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -62560,7 +62592,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 2027576228}
 --- !u!1 &1566465357
@@ -65090,7 +65122,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -65114,7 +65146,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 1288487895}
 --- !u!1 &1630361896
@@ -70942,7 +70974,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -70966,7 +70998,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 1119361799}
 --- !u!1 &1763013798
@@ -72178,6 +72210,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1526250313}
+    - targetCorrespondingSourceObject: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526250320}
   m_SourcePrefab: {fileID: 100100000, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
 --- !u!1 &1819374676
 GameObject:
@@ -72426,7 +72461,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 01946679ec81535428707bafe5524352, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: fec0630717333f64cabd3dad96bbb5bd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarDriver
@@ -72450,7 +72485,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1500
+  MaxStep: 3500
   carController: {fileID: 0}
   checkpointTracker: {fileID: 422572180}
 --- !u!4 &1823634055 stripped
@@ -74638,6 +74673,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 787645176}
+    - targetCorrespondingSourceObject: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 787645184}
   m_SourcePrefab: {fileID: 100100000, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
 --- !u!1 &1906049713
 GameObject:
